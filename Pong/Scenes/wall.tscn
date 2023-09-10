@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cwy2wxwu6l5ko"]
+
+[ext_resource type="Texture2D" uid="uid://rw444sv3fem6" path="res://Assets/paddle_or_wall.png" id="1_ro75i"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y2c73"]
+size = Vector2(32, 256)
+
+[node name="StaticBody2D" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ro75i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_y2c73")

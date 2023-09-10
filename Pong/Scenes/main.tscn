@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://bul32ewr2ae53"]
+
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_0j1jk"]
+[ext_resource type="PackedScene" uid="uid://cwy2wxwu6l5ko" path="res://Scenes/wall.tscn" id="1_x78b2"]
+[ext_resource type="PackedScene" uid="uid://bg5ctomwu83n" path="res://Scenes/Paddles/paddle.tscn" id="2_hmcd7"]
+[ext_resource type="Script" path="res://Scenes/Paddles/enemy_paddle.gd" id="3_22wt6"]
+[ext_resource type="PackedScene" uid="uid://c5diyxhr0ija2" path="res://Scenes/ball.tscn" id="4_ejwwm"]
+[ext_resource type="PackedScene" uid="uid://c7fmkho3h01vy" path="res://Scenes/edge.tscn" id="6_35h8u"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_0j1jk")
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="TopWall" parent="Walls" instance=ExtResource("1_x78b2")]
+position = Vector2(10, -600)
+rotation = 1.5708
+scale = Vector2(1, 9)
+
+[node name="BottomWall" parent="Walls" instance=ExtResource("1_x78b2")]
+position = Vector2(10, 600)
+rotation = 1.5708
+scale = Vector2(1, 9)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.4, 0.4)
+
+[node name="Paddle" parent="." instance=ExtResource("2_hmcd7")]
+position = Vector2(-1000, 0)
+
+[node name="EnemyPaddle" parent="." node_paths=PackedStringArray("ball") instance=ExtResource("2_hmcd7")]
+position = Vector2(1000, 0)
+script = ExtResource("3_22wt6")
+paddle_speed = 35000
+ball = NodePath("../Ball")
+
+[node name="Ball" parent="." instance=ExtResource("4_ejwwm")]
+
+[node name="LeftEdge" parent="." instance=ExtResource("6_35h8u")]
+position = Vector2(-1128, -8)
+
+[node name="RightEdge" parent="." instance=ExtResource("6_35h8u")]
+position = Vector2(1152, -16)
+
+[connection signal="point_scored" from="LeftEdge" to="." method="_on_enemy_scored"]
+[connection signal="point_scored" from="RightEdge" to="." method="_on_player_scored"]
